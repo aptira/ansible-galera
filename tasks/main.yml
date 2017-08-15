@@ -39,8 +39,15 @@
 - include: user.yml
   tags: [ galera, galera-users ]
 
+- name: Check if grastate.dat exists
+  stat:
+    path: /var/lib/mysql/grastate.dat
+  register: stat_result
+  
+# bootstrap when there is no existing db
 - include: bootstrap.yml
   tags: [ galera, galera-bootstrap ]
+  when: stat_result.stat.exists == False
 
 - include: pacemaker.yml
   when: galera_pacemaker_support is defined and
