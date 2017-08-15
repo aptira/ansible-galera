@@ -8,6 +8,7 @@ default_storage_engine={{ mariadb_default_storage_engine | default('InnoDB') }}
 innodb_autoinc_lock_mode=2
 bind-address={{ mariadb_bind_address | default('127.0.0.1') }}
 query_cache_size={{ mariadb_query_cache_size | default('64M') }}
+port={{ mariadb_port | default(3306) }}
 
 #
 # * Galera-related settings
