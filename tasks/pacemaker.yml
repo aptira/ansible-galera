@@ -41,3 +41,33 @@
     dest=/etc/{{ mariadb_config }}
     state=absent
     regexp='^wsrep_cluster_address='
+
+- name: get galera members
+  set_fact:
+    wsrep_address: "gcomm://{{ groups[pacemaker_cluster_group]|join(',') }}"
+- name: create galera in pacemaker
+  pcs_resource: command=create resource_id=mysql type=ocf:heartbeat:galera clone=true
+  args:
+    options:
+      config: '/etc/my.cnf'
+      test_user: 'clustercheck'
+      test_password: 'mariadb'
+      socket: '/var/lib/mysql/mysql.sock'
+      pid: '/var/run/mariadb/mariadb.pid'
+      log: '/var/log/mariadb/mariadb.log'
+      binary: '/usr/bin/mysqld_safe'
+      wsrep_cluster_address: "{{ wsrep_address }}"
+    operations:
+      - action: monitor
+        options:
+          interval: 60s
+          timeout: 55s
+      - action: start
+        options:
+          interval: 0s
+          timeout: 330s
+      - action: stop
+        options:
+          interval: 0s
+          timeout: 120s
+  run_once: true
