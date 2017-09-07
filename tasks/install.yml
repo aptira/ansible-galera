@@ -18,3 +18,19 @@
     state=latest
   with_items:
     - "{{ galera_packages }}"
+
+- name: ensure /var/run/mariadb exists
+  file:
+    path: /var/run/mariadb
+    state: directory
+    owner: mysql
+    group: mysql
+    mode: 0755
+    
+- name: ensure /var/log/mariadb exists
+  file:
+    path: /var/log/mariadb
+    state: directory
+    owner: mysql
+    group: mysql
+    mode: 0755
