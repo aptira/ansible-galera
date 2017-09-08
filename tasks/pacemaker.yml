@@ -31,10 +31,17 @@
     state=started
     enabled=yes
 
-- name: Stopping MariaDB service (ready for Pacemaker)
+- name: Stopping MariaDB service on slaves (ready for Pacemaker)
   service:
     name={{ mariadb_svc_name }}
     state=stopped
+  when: inventory_hostname != master
+
+- name: Stopping MariaDB service on master (ready for Pacemaker)
+  service:
+    name={{ mariadb_svc_name }}
+    state=stopped
+  when: inventory_hostname == master
 
 - name: Deleting wsrep_cluster_address option (ready for Pacemaker)
   lineinfile:
@@ -45,13 +52,14 @@
 - name: get galera members
   set_fact:
     wsrep_address: "gcomm://{{ groups[pacemaker_cluster_group]|join(',') }}"
+    
 - name: create galera in pacemaker
-  pcs_resource: command=create resource_id=mysql type=ocf:heartbeat:galera clone=true
+  pcs_resource: command=create resource_id=mysql type=ocf:heartbeat:galera master=true
   args:
     options:
       config: '/etc/my.cnf'
-      test_user: 'clustercheck'
-      test_password: 'mariadb'
+      check_user: 'clustercheck'
+      check_passwd: 'mariadb'
       socket: '/var/lib/mysql/mysql.sock'
       pid: '/var/run/mariadb/mariadb.pid'
       log: '/var/log/mariadb/mariadb.log'
