@@ -78,4 +78,11 @@
         options:
           interval: 0s
           timeout: 120s
+      - action: promote
+        options:
+          timeout: 300s
+          on-fail: block
+    metas:
+      master-max: 3
+      ordered: true
   run_once: true

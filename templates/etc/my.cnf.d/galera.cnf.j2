@@ -2,6 +2,7 @@
 # * mysqld-related settings
 #
 [mysqld]
+skip-name-resolve=1
 datadir=/var/lib/mysql/
 binlog_format=ROW
 default_storage_engine={{ mariadb_default_storage_engine | default('InnoDB') }}
