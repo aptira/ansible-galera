@@ -58,8 +58,8 @@
   args:
     options:
       config: '/etc/my.cnf'
-      check_user: 'clustercheck'
-      check_passwd: 'mariadb'
+      check_user: "{{ galera_clustercheck_user }}"
+      check_passwd: "{{ galera_clustercheck_password }}"
       socket: '/var/lib/mysql/mysql.sock'
       pid: '/var/run/mariadb/mariadb.pid'
       log: '/var/log/mariadb/mariadb.log'
