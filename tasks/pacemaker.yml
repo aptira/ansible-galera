@@ -19,6 +19,12 @@
     dest=/usr/bin/clustercheck
     mode=0755
 
+- name: Creating /usr/lib/ocf/resource.d/heartbeat/galera
+  copy:
+    src=usr/lib/ocf/resource.d/heartbeat/galera
+    dest=/usr/lib/ocf/resource.d/heartbeat/galera
+    mode=0755
+
 - name: Creating /etc/xinet.d/galera-stream file (ready for Pacemaker)
   template:
     src=etc/xinetd.d/galera-stream.j2
