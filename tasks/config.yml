@@ -5,11 +5,16 @@
     name={{ mariadb_svc_name }}
     enabled=yes
 
+- name: Check mysql process
+  shell: ps auxwww|grep mysqld_safe|grep -v grep
+  register: ps_out
+  
 - name: Starting MariaDB service
   service:
     name={{ mariadb_svc_name }}
     state=started
-  when: inventory_hostname == master
+  when: inventory_hostname == master and (galera_pacemaker_support is not defined or
+      galera_pacemaker_support == false or "mysqld" not in ps_out.stdout)
 
 - include: configurations/Debian.yml
   when: ansible_os_family == 'Debian'
