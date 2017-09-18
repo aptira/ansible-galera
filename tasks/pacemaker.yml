@@ -76,6 +76,16 @@
         options:
           interval: 60s
           timeout: 55s
+      - action: monitor
+        options:
+          interval: 20s
+          role: Master
+          timeout: 55s
+      - action: monitor
+        options:
+          interval: 50s
+          role: Slave
+          timeout: 55s
       - action: start
         options:
           interval: 0s
