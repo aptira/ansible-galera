@@ -8,6 +8,7 @@
 - name: Check mysql process
   shell: ps auxwww|grep mysqld_safe|grep -v grep
   register: ps_out
+  ignore_errors: yes
   
 - name: Starting MariaDB service
   service:
