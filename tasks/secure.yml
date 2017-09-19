@@ -10,7 +10,6 @@
   mysql_user:
     name: root
     host: "{{ item }}"
-    state: absent
   with_items:
     - 'localhost'
     - '127.0.0.1'
