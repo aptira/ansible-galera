@@ -19,5 +19,6 @@
 - name: Disabling anonymous access
   mysql_user:
     name: ""
+    host_all: yes
     state: absent
   when: inventory_hostname == master
