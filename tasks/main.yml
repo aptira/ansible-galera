@@ -20,6 +20,7 @@
   tags: [ galera, galera-reset ]
 
 - include: repos.yml
+  when: manage_repo
   tags: [ galera, galera-repo ]
 
 - include: install.yml
