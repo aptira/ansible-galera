@@ -11,6 +11,7 @@ mariadb_hosts_allow: 192.168.%
 mariadb_datadir: /var/lib/mysql
 pid_file: /var/run/mariadb/mariadb.pid
 log_file: /var/log/mariadb/mariadb.log
+manage_repo: false
 
 galera_pacemaker_support: false
 galera_clustercheck_user: clustercheck
