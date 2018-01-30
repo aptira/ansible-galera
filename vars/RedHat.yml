@@ -1,12 +1,10 @@
 ---
 # file: roles/galera/vars/RedHat.yml
 galera_packages:
-  - MariaDB-server
-  - percona-xtrabackup
+  - mariadb-server
   - socat
   - MySQL-python
-  - percona-toolkit
-  - galera
+  - mariadb-server-galera
   - policycoreutils-python
   - checkpolicy
   - xinetd
