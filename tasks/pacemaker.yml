@@ -49,11 +49,12 @@
     state=stopped
   when: inventory_hostname == master
 
-- name: Deleting wsrep_cluster_address option (ready for Pacemaker)
-  lineinfile:
-    dest=/etc/{{ mariadb_config }}
-    state=absent
-    regexp='^wsrep_cluster_address='
+# need to keep this for recovery to work
+#- name: Deleting wsrep_cluster_address option (ready for Pacemaker)
+#  lineinfile:
+#    dest=/etc/{{ mariadb_config }}
+#    state=absent
+#    regexp='^wsrep_cluster_address='
 
 - name: get galera members
   set_fact:
