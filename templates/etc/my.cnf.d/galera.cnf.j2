@@ -12,10 +12,35 @@ query_cache_size={{ mariadb_query_cache_size | default('64M') }}
 port={{ mariadb_port | default(3306) }}
 pid-file={{ pid_file }}
 general_log_file={{ log_file }}
+
+expire_logs_days = 10
+innodb_flush_log_at_trx_commit = 1
+innodb_locks_unsafe_for_binlog = 1
+key_buffer_size = 16M
+max_allowed_packet = 16M
+max_binlog_size = 100M
+max_connections = 4096
+open_files_limit = -1
+query_cache_limit = 1M
+query_cache_type = 0
+skip-external-locking
+ssl = false
+thread_cache_size = 8
+thread_stack = 256K
+
 #
 # * Galera-related settings
 #
 # Galera Provider Configuration
+wsrep_auto_increment_control = 1
+wsrep_causal_reads = 0
+wsrep_certify_nonPK = 1
+wsrep_convert_LOCK_to_trx = 0
+wsrep_debug = 0
+wsrep_drupal_282555_workaround = 0
+wsrep_max_ws_rows = 131072
+wsrep_max_ws_size = 1073741824
+
 wsrep_on=ON
 wsrep_provider={{ galera_provider }}
 wsrep_provider_options="{{ galera_provider_options | default('pc.ignore_quorum=true') }}"
@@ -33,3 +58,18 @@ wsrep_sst_auth={{ galera_sst_user }}:{{ galera_sst_password }}
 # Galera Node Configuration
 wsrep_node_address="{{ galera_node_address | default('127.0.0.1') }}"
 wsrep_node_name="{{ ansible_hostname }}"
+
+[mysqld-5.0]
+myisam-recover = BACKUP
+
+[mysqld-5.1]
+myisam-recover = BACKUP
+
+[mysqld-5.5]
+myisam-recover = BACKUP
+
+[mysqld-5.6]
+myisam-recover-options = BACKUP
+
+[mysqld-5.7]
+myisam-recover-options = BACKUP
