@@ -44,6 +44,7 @@
   stat:
     path: /var/lib/mysql/grastate.dat
   register: stat_result
+  tags: [ galera, galera-bootstrap ]
   
 # bootstrap when there is no existing db
 - include: bootstrap.yml
