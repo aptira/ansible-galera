@@ -25,3 +25,8 @@
   template:
     src=etc/my.cnf.d/galera.cnf.j2
     dest=/etc/my.cnf.d/galera.cnf
+
+- name: remove auth_gssapi.cnf if not used
+  file:
+    path: /etc/my.cnf.d/auth_gssapi.cnf
+    state: absent
